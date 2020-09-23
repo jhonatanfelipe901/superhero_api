@@ -1,0 +1,247 @@
+<html>  
+    <head>  
+        <style>  
+            #leftbox { 
+                float:left;   
+                width:35%; 
+                height:1080px; 
+            } 
+            #middlebox{ 
+                float:left;  
+                width:30%; 
+                height:1080px; 
+            } 
+            #rightbox{ 
+                float:right; 
+                width:35%; 
+                height:1080px; 
+            } 
+            h1{ 
+                color:red; 
+                text-align:center; 
+            } 
+
+            h4{ 
+                color:red; 
+                text-align:center; 
+            } 
+            h2{ 
+                color:red; 
+                text-align:center; 
+            } 
+            body{
+                background-color: black;
+            }
+            article img{
+                width: 100%;
+                border-radius: 10px 10px 0 0;
+            }
+            article h1{
+                text-align: center;
+                height: 20px;
+            }
+
+            article > div{
+                padding: 10px;
+                margin-bottom: 10px;
+            }
+
+            article div>div{
+                height: 10px;
+                width: 100%;
+                background-color: #d0d0d0;
+                border-radius: 5px;
+            }
+
+            .intelligence {
+                background-color: #ff6767; 
+            }
+
+            .strength {
+                background-color: #f2dc35; 
+            }
+
+            .speed {
+                background-color: #358cf2; 
+            }
+
+            .durability {
+                background-color: #c635f2; 
+            }
+
+            .power {
+                background-color: #f2b835 ; 
+            }
+
+            .combat {
+                background-color: #62b918; 
+            }
+            article{
+                border-radius: 10px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+            }
+            
+        </style>  
+    </head>  
+    <body>  
+        <div id = "boxes"> 
+            <h1>Jhonatan Felipe - Hero API Web Mobile</h1> 
+              
+            <div id="leftbox"> 
+               
+            </div>  
+              
+            <div id="middlebox"> 
+                <h2>Carregando...</h2>
+            </div> 
+              
+            <div id="rightbox"> 
+               
+            </div> 
+        </div> 
+    </body>  
+</html>       
+
+<script>
+    const token = "10207244891555840";
+    const urlBase = "https://superheroapi.com/api.php/" + token;
+    var p1 = 0;
+    var p2 = 0;
+    var j1 = "";
+    var j2 = "";
+    var contador = 0;
+    var myt = 0;
+
+window.onload = function(){
+    left = document.getElementById("leftbox");
+    right = document.getElementById("rightbox");
+    center = document.getElementById("middlebox");
+    let elemento = document.querySelector('#contador');
+
+    function myTimer() {
+        setVariables();
+        var number = getRandomInt(1, 200)
+        var number2 = getRandomInt(1, 200)
+        getJSON(urlBase + "/" + number, showCard, 1);
+        getJSON(urlBase + "/" + number2, showCard, 2);
+    }
+        setInterval(myTimer, 7000);
+    }
+
+    var count = 0;   
+
+    function setVariables(){
+        left.innerHTML = "";
+        right.innerHTML = "";
+        center.innerHTML = "";
+        p1 = 0;
+        p2 = 0;
+        j1 = "";
+        j2 = "";
+        contador = 0;
+        clearInterval(myt);
+
+    }
+    
+    function getRandomInt(min, max) {
+        min = Math.ceil(min);
+        max = Math.floor(max);
+        return Math.floor(Math.random() * (max - min)) + min;
+    }
+
+    function showCard(data, perso){
+        var img = data.image.url;
+
+        var card = "<article>";
+
+        card += "<img src='" + img + "'/>";
+        card += "<h1>" + data.name + "</h1>";
+
+
+        card += "<div><h4>Intelligence:</h4><br>";
+        card += "<div class='intelligence' style='width:"+data.powerstats.intelligence+"%'></div>";
+        card += "</div>";
+
+        card += "<div><h4>Strength:</h4><br>";
+        card += "<div class='strength' style='width:"+data.powerstats.strength+"%'></div>";
+        card += "</div>";
+
+        card += "<div><h4>Speed:</h4><br>";
+        card += "<div class='speed' style='width:"+data.powerstats.speed+"%'></div>";
+        card += "</div>";
+
+        card += "<div><h4>Durability:</h4><br>";
+        card += "<div class='duralibity' style='width:"+data.powerstats.durability+"%'></div>";
+        card += "</div>";
+
+        card += "<div><h4>Power:</h4><br>";
+        card += "<div class='power' style='width:"+data.powerstats.power+"%'></div>";
+        card += "</div>";
+
+        card += "<div><h4>Combat:</h4><br>";
+        card += "<div class='combat' style='width:"+data.powerstats.combat+"%'></div>";
+        card += "</div>";
+
+        card += "</article>";
+
+        if(perso == 1){
+            left.innerHTML += card;
+            j1 = data.name;
+            p1 = data.powerstats.power != null ? parseInt(data.powerstats.power) : 0 + data.powerstats.intelligence != null ? parseInt(data.powerstats.intelligence) : 0
+                        data.powerstats.durability != null ? parseInt(data.powerstats.durability) : 0 + data.powerstats.speed != null ? parseInt(data.powerstats.speed) : 0 +
+                        data.powerstats.strength != null ? parseInt(data.powerstats.strength) : 0 + data.powerstats.combat != null ? parseInt(data.powerstats.combat) : 0          
+        }else if (perso == 2){
+            right.innerHTML += card;
+            j2 = data.name;
+            p2 = data.powerstats.power != null ? parseInt(data.powerstats.power) : 0 + data.powerstats.intelligence != null ? parseInt(data.powerstats.intelligence) : 0
+                        data.powerstats.durability != null ? parseInt(data.powerstats.durability) : 0 + data.powerstats.speed != null ? parseInt(data.powerstats.speed) : 0 +
+                        data.powerstats.strength != null ? parseInt(data.powerstats.strength) : 0 + data.powerstats.combat != null ? parseInt(data.powerstats.combat) : 0 
+        
+            ganhador = p1 > p2 ? j1 : p1 == p2 ? "Empate" : j2;
+
+            setGanhador(ganhador);
+        }
+    }
+
+    function setGanhador(ganhador){
+        var div = "";
+        if (ganhador == "empate"){
+            div += "<h2>Empatou!" + "</h2>";
+        }else{
+            div += "<h2>O vencedor é: " + ganhador + "</h2>";
+        }
+        center.innerHTML += div;
+
+        var ga = ""
+
+        ga += "<h2>Próxima partida em: </h2>";
+
+        center.innerHTML += ga;
+
+        myt = setInterval(() => setCont(contador++), 1000);
+    }
+
+    function setCont(cont){
+        var ga = "";
+
+        ga += "<h2>"+ cont + "</h2>";
+
+        center.innerHTML += ga;
+    }
+
+
+    function getJSON(url, callback, perso){
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", url, true);
+        xhr.responseType = "json";
+        xhr.onload = function(){
+            if (xhr.status === 200){
+                console.log("Dados recebidos com sucesso!");
+                callback(xhr.response, perso);
+            } else {
+                console.warn("Problemas ao conectar com a API: " + xhr.status);
+            }
+        }
+            xhr.send();
+    }
+    </script>
